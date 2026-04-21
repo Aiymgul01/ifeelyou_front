@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { playSound } from "@/lib/soundPlayer";
@@ -29,7 +31,7 @@ export default function GameEngine({ stage }) {
         if (stage === 3) type = "word";
 
         const res = await fetch(
-          `http://localhost:5001/api/game-items?type=${type}`,
+          `https://ifeelyou-back.onrender.com/api/game-items?type=${type}`,
         );
         const data = await res.json();
 
@@ -192,7 +194,7 @@ export default function GameEngine({ stage }) {
           // Если правильных ответов нет (чтобы не ломать стату), ставим 0
           const finalCorrect = lives === 3 ? stats.correct + 1 : stats.correct;
 
-          await fetch("http://localhost:5001/api/progress", {
+          await fetch("https://ifeelyou-back.onrender.com/api/progress", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

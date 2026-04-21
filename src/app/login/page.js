@@ -16,16 +16,19 @@ export default function AuthPage() {
       const googleUser = result.user;
 
       // Стучимся на наш готовый бэкенд
-      const response = await fetch("http://localhost:5001/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          uid: googleUser.uid,
-          displayName: googleUser.displayName,
-          email: googleUser.email,
-          photoURL: googleUser.photoURL,
-        }),
-      });
+      const response = await fetch(
+        "https://ifeelyou-back.onrender.com/api/users",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            uid: googleUser.uid,
+            displayName: googleUser.displayName,
+            email: googleUser.email,
+            photoURL: googleUser.photoURL,
+          }),
+        },
+      );
 
       if (response.ok) {
         // Успешный вход -> переходим в меню выбора игр

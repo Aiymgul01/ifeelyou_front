@@ -16,12 +16,14 @@ export default function AboutPage() {
     e.preventDefault();
     setStatus("Жіберілуде... (Отправка...)");
     try {
-      const res = await fetch("http://localhost:5001/api/feedback", {
-        //осы ссылка форум датаны кабылдайды
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData), //отправляет форум дата на бэк
-      });
+      const res = await fetch(
+        "https://ifeelyou-back.onrender.com/api/feedback",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        },
+      );
       if (res.ok) {
         setStatus("Хабарлама сәтті жіберілді! (Успешно!)");
         setFormData({ name: "", email: "", subject: "", message: "" });
@@ -32,7 +34,7 @@ export default function AboutPage() {
       setStatus("Сервермен байланыс жоқ.");
     }
   };
-
+  //bg-gradient-to-br from-indigo-100 to-white p-10
   return (
     <div className="max-w-7xl mx-auto px-10 py-10 animate-fade-in">
       {/* Секция: Біз жайлы ақпарат */}
@@ -53,8 +55,8 @@ export default function AboutPage() {
             қабілеті шектеулі балалардың өмірін жақсарту.
           </p>
         </div>
-        <div className="flex-1 bg-gradient-to-br from-indigo-100 to-white p-10 rounded-[40px] shadow-lg relative h-64">
-          {/* Декорация в стиле макflex-1 bg-gradient-to-br from-iета */}
+        <div className="flex-1 bg-[url('/images/about_us.jpg')] bg-cover bg-center bg-no-repeat opacity-90 rounded-[40px] shadow-lg relative h-64">
+          {/* Декорация в стиле макета */}
           <div className="absolute top-4 left-4 bg-brand-yellow text-brand-dark font-bold py-2 px-4 rounded-xl rotate-[-10deg]">
             А
           </div>
@@ -156,7 +158,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <p className="font-bold text-lg">Электрондық пошта</p>
-                <p className="text-indigo-200">hello@ifeelyou.kz</p>
+                <p className="text-indigo-200">nurlybekkyzyasema@gmail.com</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -165,7 +167,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <p className="font-bold text-lg">Телефон нөмірі</p>
-                <p className="text-indigo-200">+7 700 123 4567</p>
+                <p className="text-indigo-200">+7 771 888 20 05</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -174,7 +176,9 @@ export default function AboutPage() {
               </div>
               <div>
                 <p className="font-bold text-lg">Мекенжай</p>
-                <p className="text-indigo-200">Алматы қ., Абай даңғылы 10</p>
+                <p className="text-indigo-200">
+                  Қаскелең қ., Абылайхан көшесі 1/1
+                </p>
               </div>
             </div>
           </div>
