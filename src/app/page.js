@@ -34,7 +34,7 @@ export default function Home() {
 
         {/* Графика справа */}
         <div className="flex-1 relative w-full h-[400px] flex justify-center items-center">
-           <div className="w-[350px] h-[350px] bg-gradient-to-br from-indigo-100 to-yellow-50 rounded-[40px] shadow-lg relative">
+           <div className="w-[350px] h-[350px] bg-[url('/images/main_logo.jpeg')] bg-cover bg-center bg-no-repeat pl-8  rounded-[40px] shadow-lg relative">
              <div className="absolute -top-6 -left-6 w-20 h-20 bg-brand-yellow rounded-2xl flex items-center justify-center text-4xl font-bold text-brand-dark shadow-md rotate-[-10deg]">А</div>
              <div className="absolute top-1/2 -left-10 w-16 h-16 bg-red-300 rounded-2xl flex items-center justify-center text-3xl font-bold text-white shadow-md rotate-[15deg]">Б</div>
              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-brand-yellow rounded-2xl flex items-center justify-center text-5xl font-bold text-brand-dark shadow-md rotate-[5deg]">О</div>
@@ -43,7 +43,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3 Карточки преимуществ */}
+      {/* 3 Карточки преимуществ bg-gradient-to-br from-indigo-100 to-yellow-50*/}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-32">
         <div className="bg-white p-8 rounded-[30px] shadow-sm border border-gray-50 hover:shadow-md transition">
           <div className="w-12 h-12 bg-brand-yellow rounded-full flex items-center justify-center text-xl mb-6">🎮</div>

@@ -26,7 +26,7 @@ export default function AboutPage() {
       setStatus('Сервермен байланыс жоқ.');
     }
   };
-
+//bg-gradient-to-br from-indigo-100 to-white p-10
   return (
     <div className="max-w-7xl mx-auto px-10 py-10 animate-fade-in">
       
@@ -43,7 +43,7 @@ export default function AboutPage() {
             Біздің мақсатымыз - білім алу мүмкіндіктерін теңестіру және көру қабілеті шектеулі балалардың өмірін жақсарту.
           </p>
         </div>
-        <div className="flex-1 bg-gradient-to-br from-indigo-100 to-white p-10 rounded-[40px] shadow-lg relative h-64">
+        <div className="flex-1 bg-[url('/images/about_us.jpg')] bg-cover bg-center bg-no-repeat opacity-90 rounded-[40px] shadow-lg relative h-64">
            {/* Декорация в стиле макета */}
            <div className="absolute top-4 left-4 bg-brand-yellow text-brand-dark font-bold py-2 px-4 rounded-xl rotate-[-10deg]">А</div>
            <div className="absolute bottom-10 left-10 bg-red-300 text-brand-dark font-bold py-2 px-4 rounded-xl rotate-[15deg]">Б</div>
@@ -108,15 +108,15 @@ export default function AboutPage() {
           <div className="space-y-8 z-10 relative">
             <div className="flex items-center gap-4">
               <div className="bg-white text-brand-yellow w-12 h-12 rounded-full flex items-center justify-center text-xl">✉️</div>
-              <div><p className="font-bold text-lg">Электрондық пошта</p><p className="text-indigo-200">hello@ifeelyou.kz</p></div>
+              <div><p className="font-bold text-lg">Электрондық пошта</p><p className="text-indigo-200">nurlybekkyzyasema@gmail.com</p></div>
             </div>
             <div className="flex items-center gap-4">
               <div className="bg-white text-brand-yellow w-12 h-12 rounded-full flex items-center justify-center text-xl">📞</div>
-              <div><p className="font-bold text-lg">Телефон нөмірі</p><p className="text-indigo-200">+7 700 123 4567</p></div>
+              <div><p className="font-bold text-lg">Телефон нөмірі</p><p className="text-indigo-200">+7 771 888 20 05</p></div>
             </div>
             <div className="flex items-center gap-4">
               <div className="bg-white text-brand-yellow w-12 h-12 rounded-full flex items-center justify-center text-xl">📍</div>
-              <div><p className="font-bold text-lg">Мекенжай</p><p className="text-indigo-200">Алматы қ., Абай даңғылы 10</p></div>
+              <div><p className="font-bold text-lg">Мекенжай</p><p className="text-indigo-200">Қаскелең қ., Абылайхан көшесі 1/1</p></div>
             </div>
           </div>
         </div>
