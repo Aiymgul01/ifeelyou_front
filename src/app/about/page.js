@@ -11,7 +11,7 @@ export default function AboutPage() {
   });
   const [status, setStatus] = useState("");
 
-  // Отправка формы на наш Бэкенд
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("Жіберілуде... (Отправка...)");
@@ -34,7 +34,7 @@ export default function AboutPage() {
       setStatus("Сервермен байланыс жоқ.");
     }
   };
-  //bg-gradient-to-br from-indigo-100 to-white p-10
+
   return (
     <div className="max-w-7xl mx-auto px-10 py-10 animate-fade-in">
       {/* Секция: Біз жайлы ақпарат */}
@@ -107,7 +107,7 @@ export default function AboutPage() {
           ].map(
             (
               member,
-              i, //файрбейз аркыл гугл аккаунттан адамнын акпараттыарын фото аттарын озине алады
+              i, 
             ) => (
               <div
                 key={i}
