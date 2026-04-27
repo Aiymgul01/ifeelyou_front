@@ -22,7 +22,7 @@ export default function Navbar() {
     router.push('/');
   };
 
-  // Функция проверки: если нет юзера - кидаем на логин
+ 
   const handleProtectedRoute = (path) => {
     if (user) {
       router.push(path);
