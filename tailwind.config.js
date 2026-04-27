@@ -10,8 +10,8 @@
             brand: {
             purple: '#5c6bc0', 
             dark: '#512da8',
-            yellow: '#fcd34d', // Желтый для акцентов
-            light: '#f8f9fa',  // Цвет фона
+            yellow: '#fcd34d', 
+            light: '#f8f9fa',
             }
         }
         },
