@@ -20,7 +20,7 @@ export default function ProgressPage() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 1. Слушаем юзера и скачиваем его реальную историю из MongoDB
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
@@ -53,9 +53,6 @@ export default function ProgressPage() {
       </div>
     );
 
-  // ================= АНАЛИТИКА ДАННЫХ =================
-
-  // 2. Считаем общую статистику для Круговой диаграммы (PieChart)
   let totalCorrect = 0;
   let totalWrong = 0;
   history.forEach((game) => {
@@ -72,15 +69,15 @@ export default function ProgressPage() {
     { name: "Қате", value: totalWrong, color: "#eef0f8" },
   ];
 
-  // 3. Подготавливаем данные для Линейного графика (Группируем игры по дням)
+
   const activityMap = {};
   history.forEach((game) => {
     const dateObj = new Date(game.createdAt);
-    // Формат "ДД.ММ" (например 10.04)
+  
     const dayString = `${dateObj.getDate().toString().padStart(2, "0")}.${(dateObj.getMonth() + 1).toString().padStart(2, "0")}`;
 
     if (!activityMap[dayString]) activityMap[dayString] = 0;
-    activityMap[dayString] += 1; // Считаем количество сыгранных игр в этот день
+    activityMap[dayString] += 1; 
   });
 
   const activityData = Object.keys(activityMap).map((day) => ({
@@ -88,19 +85,19 @@ export default function ProgressPage() {
     score: activityMap[day],
   }));
 
-  // 4. Фильтруем историю по выбранному Кезең (Для левой нижней карточки)
+
   const stageHistory = history.filter(
     (game) => game.stage === parseInt(selectedStage),
   );
 
-  // 5. ЛОГИКА АЧИВОК (Разблокируются автоматически на основе реальных данных!)
+
   const checkAchievement = (stageNum, needPerfect) => {
     const games = history.filter((g) => g.stage === stageNum);
     if (games.length === 0) return false;
     if (needPerfect) {
-      return games.some((g) => g.correct === g.total); // Ищет хотя бы одну игру без ошибок
+      return games.some((g) => g.correct === g.total); 
     }
-    return true; // Просто прошел этап
+    return true;
   };
 
   const achievements = [
