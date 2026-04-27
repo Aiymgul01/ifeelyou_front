@@ -8,7 +8,7 @@ export default function PlayStage() {
   const { stage } = useParams();
   const [showIntro, setShowIntro] = useState(true);
 
-  // Показываем "Ойын басталды!" ровно 2 секунды
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowIntro(false);
@@ -28,7 +28,7 @@ export default function PlayStage() {
     );
   }
 
-  // Запускаем движок, передавая ему номер уровня (преобразуем строку '1' в число 1)
+
   return (
     <div className="min-h-[75vh] flex items-center justify-center p-4 w-full">
       <GameEngine stage={parseInt(stage)} />
