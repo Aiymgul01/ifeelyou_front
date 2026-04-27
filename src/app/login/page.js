@@ -15,7 +15,6 @@ export default function AuthPage() {
       const result = await signInWithPopup(auth, googleProvider);
       const googleUser = result.user;
 
-      // Стучимся на наш готовый бэкенд
       const response = await fetch(
         "https://ifeelyou-back.onrender.com/api/users",
         {
@@ -31,7 +30,7 @@ export default function AuthPage() {
       );
 
       if (response.ok) {
-        // Успешный вход -> переходим в меню выбора игр
+
         router.push("/games/select");
       }
     } catch (error) {
@@ -42,7 +41,7 @@ export default function AuthPage() {
   };
 
   return (
-    // Центрируем всё по экрану с приятным серым фоном
+
     <div className="min-h-screen flex items-center justify-center bg-[#f8f9fa] p-4">
       {/* Главная белая карточка */}
       <div className="bg-white p-10 md:p-16 rounded-[40px] shadow-xl w-full max-w-md text-center border border-gray-50 relative overflow-hidden transition-all duration-300 hover:shadow-2xl">
