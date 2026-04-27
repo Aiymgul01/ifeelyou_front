@@ -11,18 +11,18 @@ export default function GameEngine({ stage }) {
   const router = useRouter();
   const inputRef = useRef(null);
 
-  // Состояния игры
-  const [items, setItems] = useState([]); // Данные из базы
+  
+  const [items, setItems] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userInput, setUserInput] = useState("");
   const [lives, setLives] = useState(3);
-  // status: loading, intro, countdown, playing, error_1, error_2, error_3, success_mini, stage_completed
+  
   const [status, setStatus] = useState("loading");
-  const [isProcessing, setIsProcessing] = useState(false); // биринши аудил юитпей жатп екиншисин коспайды кутеди
-  // Статистика для итогового экрана
+  const [isProcessing, setIsProcessing] = useState(false);
+  
   const [stats, setStats] = useState({ correct: 0, total: 0 });
 
-  // 1. Загружаем данные из твоего Бэкенда в зависимости от этапа
+  
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -35,12 +35,12 @@ export default function GameEngine({ stage }) {
         );
         const data = await res.json();
 
-        // Перемешиваем массив, чтобы игра всегда была разной
-        const shuffled = data.sort(() => 0.5 - Math.random()).slice(0, 10); // Берем 10 случайных вопросов
+        
+        const shuffled = data.sort(() => 0.5 - Math.random()).slice(0, 10); 
         setItems(shuffled);
         setStats({ correct: 0, total: shuffled.length });
 
-        // Вместо 'playing' запускаем Интро
+        
         setStatus("intro");
       } catch (err) {
         console.error("Ошибка загрузки данных:", err);
@@ -49,12 +49,12 @@ export default function GameEngine({ stage }) {
     fetchItems();
   }, [stage]);
 
-  // 1.5 Логика стартовых экранов (Приветствие и Таймер 3-2-1)
+  
   useEffect(() => {
     if (status === "intro") {
       playSound(`/audio/system/intro_stage_${stage}.mp3`);
 
-      // ВАЖНО: 3000мс - это время на голос приветствия. Если твое аудио длиннее, увеличь это число!
+      
       setTimeout(() => {
         setStatus("countdown");
       }, 3000);
@@ -63,7 +63,7 @@ export default function GameEngine({ stage }) {
     if (status === "countdown") {
       playSound("/audio/system/countdown.mp3");
 
-      // ВАЖНО: 4000мс - это время на звук 3-2-1. Подгони под свой файл!
+      
       setTimeout(() => {
         setStatus("playing");
       }, 4000);
@@ -72,45 +72,45 @@ export default function GameEngine({ stage }) {
 
   const currentItem = items[currentIndex];
 
-  // 2. Озвучка, когда появляется новый элемент (для всех этапов)
-  // При возврате с экрана ошибки (смена status обратно на 'playing') эта функция сработает снова!
+  
+  
   useEffect(() => {
     if (status === "playing" && currentItem) {
-      // ЭТАП 1: Если в базе уже есть готовый путь (как у букв), просто играем его
+      
       if (currentItem.audioPath) {
         playSound(currentItem.audioPath);
       }
-      // ЭТАП 2 и 3: Если готового пути нет, собираем его динамически
+      
       else if (currentItem.itemId) {
         let audioFileName = currentItem.itemId;
 
         if (stage === 2) {
-          audioFileName = audioFileName.replace("syl_", ""); // для слогов
+          audioFileName = audioFileName.replace("syl_", ""); 
         } else if (stage === 3) {
-          audioFileName = audioFileName.replace("word_", ""); // для слов
+          audioFileName = audioFileName.replace("word_", ""); 
         }
 
         playSound(`/audio/stage_${stage}/${audioFileName}.mp3`);
       }
     }
 
-    // Автофокус на поле ввода
+    
     if (status === "playing" && inputRef.current) {
       inputRef.current.focus();
     }
     life;
   }, [currentIndex, status, currentItem, stage]);
 
-  // 2.5 Управление с клавиатуры на финальном экране
+  
   useEffect(() => {
     if (status === "stage_completed") {
       const handleKeyDown = (e) => {
         if (e.code === "Enter") {
           e.preventDefault();
-          window.location.reload(); // Перезапуск игры
+          window.location.reload();
         } else if (e.code === "Space") {
-          e.preventDefault(); // Чтобы страница не прыгала вниз
-          router.push("/games/select"); // Выход в меню
+          e.preventDefault(); 
+          router.push("/games/select"); 
         }
       };
 
@@ -128,14 +128,14 @@ export default function GameEngine({ stage }) {
     }
   }, [status]);
 
-  // 3. Проверка ответа
+  
   const checkAnswer = (e) => {
     if (e) e.preventDefault();
 
-    // Если поле пустое или УЖЕ идет обработка (звучит аудио) — выходим
+    
     if (!userInput.trim() || isProcessing) return;
 
-    setIsProcessing(true); // Сразу блокируем ввод и повторные нажатия
+    setIsProcessing(true); 
 
     if (userInput.trim().toLowerCase() === currentItem.text.toLowerCase()) {
       // Играем звук похвалы
@@ -145,7 +145,7 @@ export default function GameEngine({ stage }) {
         setStats((prev) => ({ ...prev, correct: prev.correct + 1 }));
       }
 
-      // Задержка перед переходом (подгони под длину файла success_mini.mp3)
+      
       setTimeout(() => {
         goToNextItem();
         setIsProcessing(false);
@@ -154,7 +154,7 @@ export default function GameEngine({ stage }) {
       const newLives = lives - 1;
       setLives(newLives);
 
-      // Включаем статус ошибки и озвучиваем сразу
+      
       if (newLives === 2) {
         setStatus("error_1");
         playSound("/audio/system/error_1.mp3");
@@ -166,32 +166,32 @@ export default function GameEngine({ stage }) {
         playSound("/audio/system/error_3.mp3");
       }
 
-      // АВТОМАТИЧЕСКИЙ ВОЗВРАТ ИЛИ ПЕРЕХОД
+      
       setTimeout(() => {
         if (newLives === 0) {
-          // Если жизней больше нет, переходим к следующему слову
+
           goToNextItem();
         } else {
-          // Если жизни еще есть, возвращаем на экран ввода (что запустит аудио буквы снова)
+          
           setUserInput("");
           setStatus("playing");
         }
         setIsProcessing(false);
-      }, 2500); // 2.5 секунды на показ ошибки и звук. При необходимости измени это число.
+      }, 2500); 
     }
   };
 
-  // 4. Переход к следующему элементу
+
   const goToNextItem = async () => {
     if (currentIndex + 1 >= items.length) {
-      // ИГРА ОКОНЧЕНА!
+  
       setStatus("success_mini");
       playSound(`/audio/system/complete_stage_${stage}.mp3`);
 
-      // Отправляем данные в базу данных
+    
       if (auth.currentUser) {
         try {
-          // Если правильных ответов нет (чтобы не ломать стату), ставим 0
+      
           const finalCorrect = lives === 3 ? stats.correct + 1 : stats.correct;
 
           await fetch("https://ifeelyou-back.onrender.com/api/progress", {
@@ -217,7 +217,7 @@ export default function GameEngine({ stage }) {
     }
   };
 
-  // ================= РЕНДЕР ЭКРАНОВ =================
+ 
 
   if (status === "loading")
     return (
@@ -226,7 +226,6 @@ export default function GameEngine({ stage }) {
       </div>
     );
 
-  // ЭКРАН: Интро (Приветствие этапа)
   if (status === "intro")
     return (
       <div className="bg-white w-full max-w-4xl p-20 rounded-[40px] shadow-xl border border-gray-50 flex flex-col items-center justify-center min-h-[400px] animate-fade-in text-center relative overflow-hidden">
@@ -242,7 +241,7 @@ export default function GameEngine({ stage }) {
       </div>
     );
 
-  // ЭКРАН: Таймер 3-2-1
+ 
   if (status === "countdown")
     return (
       <div className="bg-brand-yellow w-full max-w-4xl p-20 rounded-[40px] shadow-xl border border-brand-yellow flex flex-col items-center justify-center min-h-[400px] animate-pulse text-center">
@@ -252,7 +251,7 @@ export default function GameEngine({ stage }) {
       </div>
     );
 
-  // ЭКРАН 1: Дұрыс емес (Без кнопки)
+
   if (status === "error_1")
     return (
       <div className="bg-white w-full max-w-4xl p-20 rounded-[40px] shadow-xl border border-gray-50 relative flex flex-col items-center justify-center min-h-[400px] animate-fade-in overflow-hidden">
@@ -268,7 +267,7 @@ export default function GameEngine({ stage }) {
       </div>
     );
 
-  // ЭКРАН 2: Қате (Без кнопки)
+
   if (status === "error_2")
     return (
       <div className="bg-white w-full max-w-4xl p-20 rounded-[40px] shadow-xl border border-gray-50 relative flex flex-col items-center justify-center min-h-[400px] animate-fade-in overflow-hidden">
@@ -284,7 +283,7 @@ export default function GameEngine({ stage }) {
       </div>
     );
 
-  // ЭКРАН 3: Өкінішке орай (Без кнопки)
+
   if (status === "error_3")
     return (
       <div className="bg-white w-full max-w-4xl p-20 rounded-[40px] shadow-xl border border-gray-50 relative flex flex-col items-center justify-center min-h-[400px] animate-fade-in overflow-hidden">
@@ -300,7 +299,7 @@ export default function GameEngine({ stage }) {
       </div>
     );
 
-  // ЭКРАН 4: Мини-похвала в конце
+
   if (status === "success_mini")
     return (
       <div className="bg-white w-full max-w-4xl p-20 rounded-[40px] shadow-xl border border-gray-50 relative flex flex-col items-center justify-center min-h-[400px] animate-fade-in overflow-hidden text-center">
@@ -316,7 +315,7 @@ export default function GameEngine({ stage }) {
       </div>
     );
 
-  // ЭКРАН 5: Итоговые результаты
+
   if (status === "stage_completed")
     return (
       <div className="bg-white p-16 rounded-[40px] shadow-xl text-center border border-gray-100 flex flex-col items-center animate-fade-in">
@@ -344,7 +343,7 @@ export default function GameEngine({ stage }) {
       </div>
     );
 
-  // ОСНОВНОЙ ИГРОВОЙ ЭКРАН (status === 'playing')
+
   return (
     <div className="bg-white w-full max-w-4xl p-10 rounded-[40px] shadow-xl border border-gray-50 relative flex flex-col items-center min-h-[400px] justify-center animate-fade-in">
       {/* Тег уровня (Левый верхний угол) */}
